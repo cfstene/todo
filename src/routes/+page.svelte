@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import { enhance } from '$app/forms';
   import { Label, Input, Card } from 'flowbite-svelte';
 
-  export let data; 
+  export let data;
 </script>
 
 <form method="post" action="?/create" use:enhance>

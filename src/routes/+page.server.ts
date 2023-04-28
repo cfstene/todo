@@ -9,10 +9,13 @@ export const load = async () => {
 export const actions: Actions = {
   create: async ({request}) => {
     const data = await request.formData();
-    const taskName = data.get('taskName');
+    if (!data.has('taskName')) {
+      return {status: 403, body: 'No task name provided'}
+    }
+    const taskName = data.get('taskName')!;
     const response = await prisma.todo.create({
       data: {
-        name: taskName
+        name: taskName as string
       }
     })
     return {response}
@@ -24,7 +27,7 @@ export const actions: Actions = {
     if (!idString) {
       return {status: 403, body: 'No id provided'}
     } 
-    const id:number = parseInt(idString);
+    const id:number = parseInt(idString as string);
     const response = await prisma.todo.delete({
       where: {
         id: id
